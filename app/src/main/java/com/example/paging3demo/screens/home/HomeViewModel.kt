@@ -6,10 +6,10 @@ import com.example.paging3demo.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@ExperimentalPagingApi
+@OptIn(ExperimentalPagingApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    repository: Repository
-): ViewModel() {
+    repository : Repository
+) : ViewModel() {
     val getAllImages = repository.getAllImages()
 }

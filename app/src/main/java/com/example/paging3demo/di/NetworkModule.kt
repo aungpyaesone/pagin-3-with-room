@@ -15,28 +15,27 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@ExperimentalSerializationApi
+@OptIn(ExperimentalSerializationApi::class)
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn (SingletonComponent::class)
 object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient() : OkHttpClient{
         return OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15,TimeUnit.SECONDS)
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit{
         val contentType = MediaType.get("application/json")
         val json = Json {
             ignoreUnknownKeys = true
         }
-
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
@@ -46,8 +45,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUnsplashApi(retrofit: Retrofit): UnsplashApi {
+    fun provideUnsplashApi(retrofit: Retrofit): UnsplashApi{
         return retrofit.create(UnsplashApi::class.java)
     }
-
 }

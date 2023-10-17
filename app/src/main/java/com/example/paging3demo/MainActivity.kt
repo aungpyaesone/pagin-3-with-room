@@ -5,10 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.ExperimentalPagingApi
+import coil.annotation.ExperimentalCoilApi
 import com.example.paging3demo.navigation.SetupNavGraph
 import com.example.paging3demo.ui.theme.Paging3DemoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@OptIn(ExperimentalCoilApi::class)
 @ExperimentalPagingApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

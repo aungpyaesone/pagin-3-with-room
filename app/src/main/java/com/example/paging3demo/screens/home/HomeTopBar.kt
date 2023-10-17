@@ -11,7 +11,7 @@ import com.example.paging3demo.ui.theme.topAppBarContentColor
 @Composable
 fun HomeTopBar(
     onSearchClicked: () -> Unit
-) {
+){
     TopAppBar(
         title = {
             Text(
@@ -21,7 +21,7 @@ fun HomeTopBar(
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
         actions = {
-            IconButton(onClick = onSearchClicked) {
+            IconButton(onClick = onSearchClicked){
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search Icon"

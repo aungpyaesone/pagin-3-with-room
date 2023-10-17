@@ -1,8 +1,8 @@
 package com.example.paging3demo.screens.common
 
 import android.content.Intent
+import android.graphics.Paint.Style
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -36,48 +36,48 @@ import com.example.paging3demo.model.User
 import com.example.paging3demo.model.UserLinks
 import com.example.paging3demo.ui.theme.HeartRed
 
-@ExperimentalCoilApi
 @Composable
-fun ListContent(items: LazyPagingItems<UnsplashImage>) {
-    Log.d("Error", items.loadState.toString())
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(all = 12.dp),
+fun ListContent(itms: LazyPagingItems<UnsplashImage>){
+    LazyColumn(modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(
-            items = items,
-            key = { unsplashImage ->
-                unsplashImage.id
+            items = itms,
+            key = {
+                it.id
             }
-        ) { unsplashImage ->
-            unsplashImage?.let { UnsplashItem(unsplashImage = it) }
+        ){items ->
+            items?.let {
+                UnsplashItem(unsplashImage = it)
+            }
+
         }
+
     }
 }
 
-@ExperimentalCoilApi
 @Composable
-fun UnsplashItem(unsplashImage: UnsplashImage) {
-    val painter = rememberImagePainter(data = unsplashImage.urls.regular) {
+fun UnsplashItem(unsplashImage: UnsplashImage){
+    val painter = rememberImagePainter(data = unsplashImage.urls.regular){
         crossfade(durationMillis = 1000)
         error(R.drawable.ic_placeholder)
         placeholder(R.drawable.ic_placeholder)
     }
+
     val context = LocalContext.current
-    Box(
-        modifier = Modifier
-            .clickable {
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://unsplash.com/@${unsplashImage.user.username}?utm_source=DemoApp&utm_medium=referral")
-                )
-                startActivity(context, browserIntent, null)
-            }
-            .height(300.dp)
-            .fillMaxWidth(),
+    Box(modifier = Modifier.clickable {
+        val browserIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://unsplash.com/@${unsplashImage.user.username}?utm_source=DemoApp&utm_medium=referral")
+        )
+        startActivity(context,browserIntent,null)
+    }
+        .height(300.dp)
+        .fillMaxWidth(),
         contentAlignment = Alignment.BottomCenter
-    ) {
+    ){
+
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painter,
@@ -85,27 +85,26 @@ fun UnsplashItem(unsplashImage: UnsplashImage) {
             contentScale = ContentScale.Crop
         )
         Surface(
-            modifier = Modifier
+            modifier = Modifier.fillMaxWidth()
                 .height(40.dp)
-                .fillMaxWidth()
                 .alpha(ContentAlpha.medium),
             color = Color.Black
-        ) {}
-        Row(
-            modifier = Modifier
-                .height(40.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 6.dp),
+        ){}
+
+        Row(modifier = Modifier
+            .height(40.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
+            horizontalArrangement = Arrangement.SpaceBetween){
+
             Text(
                 text = buildAnnotatedString {
-                    append("Photo by ")
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Black)) {
+                    append("Photo by")
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Black)){
                         append(unsplashImage.user.username)
                     }
-                    append(" on Unsplash")
+                    append(" on unsplash")
                 },
                 color = Color.White,
                 fontSize = MaterialTheme.typography.caption.fontSize,
@@ -117,7 +116,10 @@ fun UnsplashItem(unsplashImage: UnsplashImage) {
                 painter = painterResource(id = R.drawable.ic_heart),
                 likes = "${unsplashImage.likes}"
             )
+
+
         }
+
     }
 }
 
@@ -125,13 +127,12 @@ fun UnsplashItem(unsplashImage: UnsplashImage) {
 fun LikeCounter(
     modifier: Modifier,
     painter: Painter,
-    likes: String
-) {
-    Row(
-        modifier = modifier.fillMaxSize(),
+    likes : String
+){
+    Row(modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End
-    ) {
+        horizontalArrangement = Arrangement.End){
+
         Icon(
             painter = painter,
             contentDescription = "Heart Icon",

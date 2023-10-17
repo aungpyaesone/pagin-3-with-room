@@ -7,7 +7,7 @@ import com.example.paging3demo.data.local.dao.UnsplashRemoteKeysDao
 import com.example.paging3demo.model.UnsplashImage
 import com.example.paging3demo.model.UnsplashRemoteKeys
 
-@Database(entities = [UnsplashImage::class, UnsplashRemoteKeys::class], version = 1)
+@Database(entities = [UnsplashImage::class, UnsplashRemoteKeys::class], version = 1, exportSchema = false)
 abstract class UnsplashDatabase : RoomDatabase() {
 
     abstract fun unsplashImageDao(): UnsplashImageDao

@@ -2,6 +2,7 @@ package com.example.paging3demo.screens.search
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -16,7 +17,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.paging3demo.ui.theme.topAppBarBackgroundColor
 import com.example.paging3demo.ui.theme.topAppBarContentColor
@@ -26,11 +26,10 @@ fun SearchWidget(
     text: String,
     onTextChange: (String) -> Unit,
     onSearchClicked: (String) -> Unit,
-    onCloseClicked: () -> Unit
+    onClosedClicked: () -> Unit
 ) {
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .height(56.dp)
             .semantics {
                 contentDescription = "SearchWidget"
@@ -45,12 +44,13 @@ fun SearchWidget(
                     contentDescription = "TextField"
                 },
             value = text,
-            onValueChange = { onTextChange(it) },
+            onValueChange = {
+                onTextChange(it)
+            },
             placeholder = {
                 Text(
-                    modifier = Modifier
-                        .alpha(alpha = ContentAlpha.medium),
-                    text = "Search here...",
+                    modifier = Modifier.alpha(alpha = ContentAlpha.medium),
+                    text = "Search Here ...",
                     color = Color.White
                 )
             },
@@ -81,7 +81,7 @@ fun SearchWidget(
                         if (text.isNotEmpty()) {
                             onTextChange("")
                         } else {
-                            onCloseClicked()
+                            onClosedClicked()
                         }
                     }
                 ) {
@@ -108,15 +108,4 @@ fun SearchWidget(
             )
         )
     }
-}
-
-@Composable
-@Preview
-fun SearchWidgetPreview() {
-    SearchWidget(
-        text = "Search",
-        onTextChange = {},
-        onSearchClicked = {},
-        onCloseClicked = {}
-    )
 }
